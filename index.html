@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💖</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, #ffc0cb, #add8e6);
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.3em;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    button {
+      padding: 20px 50px;
+      font-size: 22px;
+      margin: 15px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .yes {
+      background-color: #ff69b4;
+      color: white;
+    }
+
+    .no {
+      background-color: #87cefa;
+      color: white;
+      position: absolute;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 28px;
+      animation: float 2s linear forwards;
+    }
+
+    @keyframes float {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-200px) scale(1.5); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- موسيقى الخلفية -->
+  <audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <h1 id="question"></h1>
+
+  <div>
+    <button class="yes" id="yesBtn">نعم</button>
+    <button class="no" id="noBtn">لا</button>
+  </div>
+
+  <script>
+    const questions = [
+      "هل أنت كاتيا🤭؟",
+      "تبغيني🤭؟",
+      "علابالك بلي نبغيك😍؟"
+    ];
+
+    const finalMessage = "تا أنا نبغيك 💓 وراني معاك كل يوم وكل عام وجامي نخليك 🫶🏻";
+
+    let step = 0;
+
+    const questionEl = document.getElementById("question");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+
+    function moveNo() {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    function heart() {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerText = "💓";
+      h.style.left = Math.random() * window.innerWidth + "px";
+      h.style.top = window.innerHeight + "px";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 2000);
+    }
+
+    noBtn.addEventListener("touchstart", moveNo);
+    noBtn.addEventListener("mouseover", moveNo);
+
+    yesBtn.addEventListener("click", () => {
+      step++;
+      if (step < questions.length) {
+        questionEl.innerText = questions[step];
+      } else {
+        questionEl.innerText = finalMessage;
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+        for (let i = 0; i < 30; i++) {
+          setTimeout(heart, i * 100);
+        }
+      }
+    });
+
+    questionEl.innerText = questions[0];
+  </script>
+
+</body>
+</html>
